@@ -1,4 +1,4 @@
-public interface IOrdenador<T>{
+public interface IOrdenador<T> {
     public T[] ordenar(T[] dados);
     public int getComparacoes();
     public int getMovimentacoes();
