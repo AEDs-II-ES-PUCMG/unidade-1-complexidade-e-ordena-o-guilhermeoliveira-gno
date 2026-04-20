@@ -1,33 +1,8 @@
-import java.util.Arrays;
 import java.util.Random;
 
 public class App {
-    static final int[] tamanhosTesteGrande =  { 31_250_000, 62_500_000, 125_000_000, 250_000_000, 500_000_000 };
-    static final int[] tamanhosTesteMedio =   {     12_500,     25_000,      50_000,     100_000,     200_000 };
-    static final int[] tamanhosTestePequeno = {          3,          6,          12,          24,          48 };
     static Random aleatorio = new Random();
-    static long operacoes;
-    static double nanoToMilli = 1.0/1_000_000;
-    
 
-    /**
-     * Gerador de vetores aleatórios de tamanho pré-definido. 
-     * @param tamanho Tamanho do vetor a ser criado.
-     * @return Vetor com dados aleatórios, com valores entre 1 e (tamanho/2), desordenado.
-     */
-    static int[] gerarVetor(int tamanho){
-        int[] vetor = new int[tamanho];
-        for (int i = 0; i < tamanho; i++) {
-            vetor[i] = aleatorio.nextInt(1, tamanho/2);
-        }
-        return vetor;        
-    }
-
-    /**
-     * Gerador de vetores de objetos do tipo Integer aleatórios de tamanho pré-definido. 
-     * @param tamanho Tamanho do vetor a ser criado.
-     * @return Vetor de Objetos Integer com dados aleatórios, com valores entre 1 e (tamanho/2), desordenado.
-     */
     static Integer[] gerarVetorObjetos(int tamanho) {
         Integer[] vetor = new Integer[tamanho];
         for (int i = 0; i < tamanho; i++) {
@@ -37,22 +12,63 @@ public class App {
     }
 
 
+
     public static void main(String[] args) {
         int tam = 20;
-        Integer[] vetor = gerarVetorObjetos(tam);
+        Integer[] vetorOriginal = gerarVetorObjetos(tam);
 
-        BubbleSort<Integer> bolha = new BubbleSort<>();
+        // 1. Testando BubbleSort
+        IOrdenador<Integer> bolha = new BubbleSort<>();
+        bolha.ordenar(vetorOriginal);
+        imprimirResultado("Bolha (BubbleSort)", bolha);
 
-        Integer[] vetorOrdenadoBolha = bolha.ordenar(vetor);
+        // 2. Testando InsertionSort
+        IOrdenador<Integer> insercao = new InsertionSort<>();
+        insercao.ordenar(vetorOriginal);
+        imprimirResultado("Inserção (InsertionSort)", insercao);
 
-        System.out.println("\nVetor ordenado método Bolha:");
-        System.out.println("Comparações: " + bolha.getComparacoes());
-        System.out.println("Movimentações: " + bolha.getMovimentacoes());
-        System.out.println("Tempo de ordenação (ms): " + bolha.getTempoOrdenacao());
-
-        /* TO DO
-        *Fazer a implementacao do restante do main para a ordenacao 
-        *  com os algoritmos InsertionSort e SelectionSort
-        */
+        // 3. Testando SelectionSort
+        IOrdenador<Integer> selecao = new SelectionSort<>();
+        selecao.ordenar(vetorOriginal);
+        imprimirResultado("Seleção (SelectionSort)", selecao);
     }
+
+    static void imprimirResultado(String nome, IOrdenador ordenador) {
+        System.out.println("\n--- Método: " + nome + " ---");
+        System.out.println("Comparações: " + ordenador.getComparacoes());
+        System.out.println("Movimentações: " + ordenador.getMovimentacoes());
+        System.out.printf("Tempo de ordenação: %.4f ms\n", ordenador.getTempoOrdenacao());
+    }
+
+
+
+    static void ordenarPedidos(){
+        if (metodo=="heap"){
+
+        }
+        if (metodo=="selection"){
+            
+        }
+        if (metodo=="bubble"){
+            
+        }
+        if (metodo=="insertion"){
+            
+        }
+
+    }
+
+    static void localizarPedidosPremium(){
+// deveria ler o vetor ate o momento em que o valor do vetor ordenado superasse o valor estipulado
+//de modo que nao fizesse mais comparacoes, apenas listaria os seguintes dados
+for (i=0;i<(array.length-1);i++){
+    if (valor>=array[i]){
+        limite=i;
+        for (i=limite;i<(array.length-limite);i++)
+            print nome;
+    }
+} 
+    }
+
+
 }
