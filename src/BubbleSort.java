@@ -1,21 +1,35 @@
 import java.util.Arrays;
+import java.util.Comparator;
 
 public class BubbleSort<T extends Comparable<T>> implements IOrdenador<T>{
 
-    private int comparacoes;
-    private int movimentacoes;
+    private long comparacoes;
+    private long movimentacoes;
     private double tempoOrdenacao;
     private double inicio;
+    private Comparator<T> comparador;
 
     private double nanoToMilli = 1.0/1_000_000;
 
+    public BubbleSort() {
+        this.comparador = (a, b) -> a.compareTo(b);
+    }
+
+    public BubbleSort(Comparator<T> comparador) {
+        this.comparador = comparador;
+    }
+
+    public void setComparador(Comparator<T> comparador) {
+        this.comparador = comparador;
+    }
+
     @Override
-    public int getComparacoes() {
+    public long getComparacoes() {
         return comparacoes;
     }
 
     @Override
-    public int getMovimentacoes() {
+    public long getMovimentacoes() {
         return movimentacoes;
     }
 
@@ -49,8 +63,8 @@ public class BubbleSort<T extends Comparable<T>> implements IOrdenador<T>{
         for (int i = tamanho - 1; i > 0; i--) {
             for (int j = 0; j < i; j++) {
                 comparacoes++;
-                if ((dadosOrdenados[j].compareTo(dadosOrdenados[j+1]) > 0))
-                swap (j, j + 1, dadosOrdenados);
+                if (comparador.compare(dadosOrdenados[j], dadosOrdenados[j+1]) > 0)
+                    swap (j, j + 1, dadosOrdenados);
             }
         }	
         terminar();

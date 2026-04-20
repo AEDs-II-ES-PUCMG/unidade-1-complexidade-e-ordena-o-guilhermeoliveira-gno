@@ -74,7 +74,21 @@ public class Pedido implements Comparable<Pedido>{
 		double valorPedido = 0;
 		BigDecimal valorPedidoBD;
 
-		//Sua lógica de cálculo do valor final do pedido aqui
+		// Calcula valor total com preços congelados
+		for (int i = 0; i < quantItens; i++) {
+			valorPedido += itens[i].getValorTotal();
+		}
+		
+		// Aplica desconto se pagamento à vista
+		if (formaDePagamento == 1) {
+			valorPedido *= (1.0 - DESCONTO_PG_A_VISTA);
+		}
+		
+		// Usa BigDecimal para arredondar corretamente para 2 casas decimais
+		valorPedidoBD = new BigDecimal(valorPedido);
+		valorPedidoBD = valorPedidoBD.setScale(2, RoundingMode.HALF_UP);
+		
+		return valorPedidoBD.doubleValue();
 	}
 
 	/**
@@ -85,7 +99,9 @@ public class Pedido implements Comparable<Pedido>{
      */
     public double valorCatalogoAtual() {
         double soma = 0;
-        //Sua lógica de cálculo do valor total ao preço de catálogo atual aqui
+        for (int i = 0; i < quantItens; i++) {
+            soma += itens[i].getValorTotalAtual();
+        }
         return soma;
     }
 
@@ -95,7 +111,7 @@ public class Pedido implements Comparable<Pedido>{
      * @return Índice de economia (double).
      */
     public double indiceEconomia() {
-        //Sua lógica de cálculo do índice de economia aqui
+        return valorCatalogoAtual() - valorFinal();
     }
 
 	/**
